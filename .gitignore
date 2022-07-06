@@ -2,9 +2,11 @@
 *~
 /.vscode
 __pycache__
+*/__pycache__
+*/*/__pycache__
+*/*/*/__pycache__
 myvenv
-db.sqlite3
-/static
+# /static
 .DS_Store
 web.config
 pro_settings.py

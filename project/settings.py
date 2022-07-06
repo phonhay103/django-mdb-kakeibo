@@ -92,9 +92,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 # change
-LANGUAGE_CODE = 'ja'
+LANGUAGE_CODE = 'vi'
 # change
-TIME_ZONE = 'Asia/Tokyo'
+TIME_ZONE = 'Asia/Ho_Chi_Minh'
 
 USE_I18N = True
 
@@ -122,8 +122,8 @@ NUMBER_GROUPING = 3
 
 # 家計簿のスタート年を定義
 # 年の絞り込み検索のスタートする年として使用されます。
-KAKEIBO_START_YEAR = 2019
+KAKEIBO_START_YEAR = 2022
 
 # 家計簿の起算月を定義
 # 年初比に使用されます。
-MONTH_OF_BEGIN_TERM = 4
+MONTH_OF_BEGIN_TERM = 1

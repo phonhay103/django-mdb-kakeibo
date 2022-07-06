@@ -98,12 +98,24 @@
   "model": "kakeibo.assetcategory",
   "pk": 2,
   "fields": {
-    "name": "日本株式"
+    "name": "株式"
   }
 }, {
   "model": "kakeibo.assetcategory",
   "pk": 3,
   "fields": {
-    "name": "米国株式"
+    "name": "債券"
+  }
+}, {
+  "model": "kakeibo.assetcategory",
+  "pk": 4,
+  "fields": {
+    "name": "暗号通貨"
+  }
+}, {
+  "model": "kakeibo.assetcategory",
+  "pk": 5,
+  "fields": {
+    "name": "その他"
   }
 }]
