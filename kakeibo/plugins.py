@@ -103,6 +103,7 @@ class BaseDashPageMixin:
     @staticmethod
     def calc_diff_ratio(current_amount, past_amount):
         """増減率を計算して返す"""
+
         if current_amount and past_amount:
             return round(100 * (current_amount / past_amount - 1), 2)
         elif current_amount:
@@ -323,6 +324,7 @@ class AssetDashMixin(MonthPagerMixin, BaseDashPageMixin):
             amount_current = val[1]
             amount_prev_month = val[2]
             amount_begin_term = val[3]
+
             items.append({
                 'category': category,
                 'current': amount_current,
@@ -338,6 +340,12 @@ class AssetDashMixin(MonthPagerMixin, BaseDashPageMixin):
         # テーブルのトータル部分を作成
         total_amount_prev_month = self.get_sum_amount(qs_prev_month)
         total_amount_begin_term = self.get_sum_amount(qs_begin_term)
+
+        if total_amount_prev_month is None:
+            total_amount_prev_month = 0
+        if total_amount_begin_term is None:
+            total_amount_begin_term = 0
+        
         total = {
             'current': total_amount_current,
             'prev_month': total_amount_prev_month,
@@ -347,6 +355,7 @@ class AssetDashMixin(MonthPagerMixin, BaseDashPageMixin):
             'diff_begin_term': total_amount_current - total_amount_begin_term,
             'diff_ratio_begin_term': self.calc_diff_ratio(total_amount_current, total_amount_begin_term)
         }
+            
 
         return items, total
 
