@@ -23,6 +23,8 @@ class PaymentList(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         self.form = form = PaymentSearchForm(self.request.GET or None)
+        
+        queryset = queryset.filter(created_by=self.request.user)
 
         if form.is_valid():
             year = form.cleaned_data.get('year')
@@ -76,6 +78,8 @@ class IncomeList(LoginRequiredMixin, generic.ListView):
         queryset = super().get_queryset()
         self.form = form = IncomeSearchForm(self.request.GET or None)
 
+        queryset = queryset.filter(created_by=self.request.user)
+
         if form.is_valid():
             year = form.cleaned_data.get('year')
             if year and year != '0':
@@ -107,6 +111,8 @@ class AssetList(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         self.form = form = AssetSearchForm(self.request.GET or None)
+
+        queryset = queryset.filter(created_by=self.request.user)
 
         if form.is_valid():
             year = form.cleaned_data.get('year')
@@ -143,11 +149,14 @@ class PaymentCreate(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         self.object = payment = form.save()
+        payment.created_by = self.request.user
+        payment.save()
         msg = plugins.success_message_for_item('Register',
                                                'Payment',
                                                payment.date,
                                                payment.category,
                                                payment.amount)
+        
         messages.info(self.request, msg)
         return redirect(self.get_success_url())
 
@@ -163,6 +172,8 @@ class IncomeCreate(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         self.object = income = form.save()
+        income.created_by = self.request.user
+        income.save()
         msg = plugins.success_message_for_item('Register',
                                                'Income',
                                                income.date,
@@ -188,12 +199,17 @@ class AssetCreate(LoginRequiredMixin, generic.CreateView):
         year = date.year
         month = date.month
         pk = request.POST.get('category')
-        qs_asset = Asset.objects.filter(date__year=year, date__month=month, category=pk)
+        qs_asset = Asset.objects.filter(
+            created_by = self.request.user,
+            date__year=year,
+            date__month=month,
+            category=pk
+        )
         if qs_asset.exists():
             category_name = AssetCategory.objects.values().get(pk=pk).get('name')
             msg = f"""
                 Failed to register Asset
-                Category:{category_name} is already registered in this month
+                Category: {category_name} is already registered in this month
                 """
             messages.info(self.request, msg)
             return redirect(self.get_success_url())
@@ -202,6 +218,8 @@ class AssetCreate(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         self.object = asset = form.save()
+        asset.created_by = self.request.user
+        asset.save()
         msg = plugins.success_message_for_item('Register',
                                                'Asset',
                                                asset.date,

@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class PaymentCategory(models.Model):
     """支出カテゴリ"""
@@ -12,6 +12,7 @@ class PaymentCategory(models.Model):
 
 class Payment(models.Model):
     """支出"""
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     date = models.DateField('日付')
     amount = models.IntegerField('金額')
     category = models.ForeignKey(PaymentCategory, on_delete=models.PROTECT, verbose_name='カテゴリ')
@@ -29,6 +30,7 @@ class IncomeCategory(models.Model):
 
 class Income(models.Model):
     """収入"""
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     date = models.DateField('日付')
     amount = models.IntegerField('金額')
     category = models.ForeignKey(IncomeCategory, on_delete=models.PROTECT, verbose_name='カテゴリ')
@@ -46,6 +48,7 @@ class AssetCategory(models.Model):
 
 class Asset(models.Model):
     """資産"""
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     date = models.DateField('日付')
     amount = models.BigIntegerField('資産額')
     category = models.ForeignKey(AssetCategory, on_delete=models.PROTECT, verbose_name='カテゴリ')

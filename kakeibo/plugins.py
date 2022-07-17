@@ -141,8 +141,11 @@ class MonthlyBalanceMixin(MonthPagerMixin, BaseDashPageMixin):
         current = data['current_month']
 
         # querysetを絞りこむ
-        qs_payment = Payment.objects.filter(date__year=current.year,
-                                            date__month=current.month)
+        qs_payment = Payment.objects.filter(
+            created_by=self.request.user,
+            date__year=current.year,
+            date__month=current.month
+        )
         if not qs_payment:
             return data
 
@@ -153,8 +156,11 @@ class MonthlyBalanceMixin(MonthPagerMixin, BaseDashPageMixin):
         amounts = self.get_value_list_from_pivot(df_pivot)
 
         # 収支情報の作成
-        qs_income = Income.objects.filter(date__year=current.year,
-                                          date__month=current.month)
+        qs_income = Income.objects.filter(
+            created_by=self.request.user,
+            date__year=current.year,
+            date__month=current.month
+        )
         total_payment = self.get_sum_amount(qs_payment)
         total_income = self.get_sum_amount(qs_income)
         if total_income:
@@ -224,6 +230,9 @@ class BalanceTransitionMixin(BaseDashPageMixin):
         qs_payment = Payment.objects.all()
         qs_income = Income.objects.all()
 
+        qs_payment = qs_payment.filter(created_by=self.request.user)
+        qs_income = qs_income.filter(created_by=self.request.user)
+
         graph_visible = None
         if form.is_valid():
             payment_category = form.cleaned_data.get('payment_category')
@@ -264,7 +273,10 @@ class AssetDashMixin(MonthPagerMixin, BaseDashPageMixin):
 
     def get_transition_graph_data(self):
         """推移グラフのデータを作成して返す"""
-        df_all = read_frame(Asset.objects.all(),
+        qs_asset = Asset.objects.all()
+        qs_asset = qs_asset.filter(created_by=self.request.user)
+
+        df_all = read_frame(qs_asset,
                             fieldnames=['date', 'category', 'amount'])
         df_all = self.add_month_col_to_df(df_all)
         df_all_pivot = self.get_df_pivot(df_all, index='month', values='amount')
@@ -285,8 +297,11 @@ class AssetDashMixin(MonthPagerMixin, BaseDashPageMixin):
         fields = ['category', 'amount']
 
         # 前月のdfを作成
-        qs_prev_month = Asset.objects.filter(date__year=prev_month.year,
-                                             date__month=prev_month.month)
+        qs_prev_month = Asset.objects.filter(
+            created_by=self.request.user,
+            date__year=prev_month.year,
+            date__month=prev_month.month
+        )
         df_prev_month = read_frame(qs_prev_month, fieldnames=fields)
         df_prev_month = df_prev_month.rename(columns={'amount': 'amount_prev_month'})
 
@@ -297,14 +312,20 @@ class AssetDashMixin(MonthPagerMixin, BaseDashPageMixin):
             begin_term_year = current.year - 1
         else:
             begin_term_year = current.year
-        qs_begin_term = Asset.objects.filter(date__year=begin_term_year,
-                                             date__month=begin_term_month)
+        qs_begin_term = Asset.objects.filter(
+            created_by=self.request.user,
+            date__year=begin_term_year,
+            date__month=begin_term_month
+        )
         df_begin_term = read_frame(qs=qs_begin_term, fieldnames=fields)
         df_begin_term = df_begin_term.rename(columns={'amount': 'amount_begin_term'})
 
         # 表示中の月のdfを作成
-        qs_current = Asset.objects.filter(date__year=current.year,
-                                          date__month=current.month)
+        qs_current = Asset.objects.filter(
+            created_by=self.request.user,
+            date__year=current.year,
+            date__month=current.month
+        )
         df_current = read_frame(qs=qs_current, fieldnames=fields)
 
         # mergeする
@@ -378,8 +399,11 @@ class AssetDashMixin(MonthPagerMixin, BaseDashPageMixin):
         )
 
         current = data['current_month']
-        qs_asset = Asset.objects.filter(date__year=current.year,
-                                        date__month=current.month)
+        qs_asset = Asset.objects.filter(
+            created_by=self.request.user,
+            date__year=current.year,
+            date__month=current.month
+        )
 
         # 現在のqsがない場合は返す
         if not qs_asset:

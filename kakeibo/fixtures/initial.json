@@ -106,10 +106,4 @@
   "fields": {
     "name": "米国株式"
   }
-}, {
-  "model": "kakeibo.assetcategory",
-  "pk": 4,
-  "fields": {
-    "name": "その他"
-  }
 }]
