@@ -9,10 +9,13 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from kakeibo import plugins
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class PaymentList(generic.ListView):
+
+class PaymentList(LoginRequiredMixin, generic.ListView):
     """支出一覧ページ"""
     template_name = 'kakeibo/payment_list.html'
+    login_url = '/login/'
     model = Payment
     ordering = '-date'
     paginate_by = 10
@@ -61,9 +64,10 @@ class PaymentList(generic.ListView):
         return context
 
 
-class IncomeList(generic.ListView):
+class IncomeList(LoginRequiredMixin, generic.ListView):
     """収入一覧ページ"""
     template_name = 'kakeibo/income_list.html'
+    login_url = '/login/'
     model = Income
     ordering = '-date'
     paginate_by = 10
@@ -92,9 +96,10 @@ class IncomeList(generic.ListView):
         return context
 
 
-class AssetList(generic.ListView):
+class AssetList(LoginRequiredMixin, generic.ListView):
     """資産一覧ページ"""
     template_name = 'kakeibo/asset_list.html'
+    login_url = '/login/'
     model = Asset
     ordering = '-date'
     paginate_by = 10
@@ -127,10 +132,11 @@ class AssetList(generic.ListView):
         return context
 
 
-class PaymentCreate(generic.CreateView):
+class PaymentCreate(LoginRequiredMixin, generic.CreateView):
     """支出登録"""
     model = Payment
     form_class = PaymentCreateForm
+    login_url = '/login/'
 
     def get_success_url(self):
         return reverse_lazy('kakeibo:payment_list')
@@ -146,10 +152,11 @@ class PaymentCreate(generic.CreateView):
         return redirect(self.get_success_url())
 
 
-class IncomeCreate(generic.CreateView):
+class IncomeCreate(LoginRequiredMixin, generic.CreateView):
     """収入登録"""
     model = Income
     form_class = IncomeCreateForm
+    login_url = '/login/'
 
     def get_success_url(self):
         return reverse_lazy('kakeibo:income_list')
@@ -165,10 +172,11 @@ class IncomeCreate(generic.CreateView):
         return redirect(self.get_success_url())
 
 
-class AssetCreate(generic.CreateView):
+class AssetCreate(LoginRequiredMixin, generic.CreateView):
     """資産登録"""
     model = Asset
     form_class = AssetCreateForm
+    login_url = '/login/'
 
     def get_success_url(self):
         return reverse_lazy('kakeibo:asset_list')
@@ -203,9 +211,10 @@ class AssetCreate(generic.CreateView):
         return redirect(self.get_success_url())
 
 
-class PaymentDelete(generic.DeleteView):
+class PaymentDelete(LoginRequiredMixin, generic.DeleteView):
     """支出削除"""
     model = Payment
+    login_url = '/login/'
 
     def get_success_url(self):
         return reverse_lazy('kakeibo:payment_list')
@@ -223,9 +232,10 @@ class PaymentDelete(generic.DeleteView):
         return redirect(self.get_success_url())
 
 
-class IncomeDelete(generic.DeleteView):
+class IncomeDelete(LoginRequiredMixin, generic.DeleteView):
     """収入削除"""
     model = Income
+    login_url = '/login/'
 
     def get_success_url(self):
         return reverse_lazy('kakeibo:income_list')
@@ -242,9 +252,10 @@ class IncomeDelete(generic.DeleteView):
         return redirect(self.get_success_url())
 
 
-class AssetDelete(generic.DeleteView):
+class AssetDelete(LoginRequiredMixin, generic.DeleteView):
     """資産削除"""
     model = Asset
+    login_url = '/login/'
 
     def get_success_url(self):
         return reverse_lazy('kakeibo:asset_list')
@@ -262,9 +273,10 @@ class AssetDelete(generic.DeleteView):
         return redirect(self.get_success_url())
 
 
-class MonthlyBalance(plugins.MonthlyBalanceMixin, generic.TemplateView):
+class MonthlyBalance(LoginRequiredMixin, plugins.MonthlyBalanceMixin, generic.TemplateView):
     """月間収支ページ"""
     template_name = 'kakeibo/monthly_balance.html'
+    login_url = '/login/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -275,9 +287,10 @@ class MonthlyBalance(plugins.MonthlyBalanceMixin, generic.TemplateView):
         return context
 
 
-class TransitionView(plugins.BalanceTransitionMixin, generic.TemplateView):
+class TransitionView(LoginRequiredMixin, plugins.BalanceTransitionMixin, generic.TemplateView):
     """月毎の収支推移ページ"""
     template_name = 'kakeibo/balance_transition.html'
+    login_url = '/login/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -290,9 +303,10 @@ class TransitionView(plugins.BalanceTransitionMixin, generic.TemplateView):
         return context
 
 
-class AssetDashboard(plugins.AssetDashMixin, generic.TemplateView):
+class AssetDashboard(LoginRequiredMixin, plugins.AssetDashMixin, generic.TemplateView):
     """資産ダッシュボード"""
     template_name = 'kakeibo/asset_dashboard.html'
+    login_url = '/login/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

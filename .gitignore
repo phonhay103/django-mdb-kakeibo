@@ -1,12 +1,5 @@
-*.pyc
-*~
 /.vscode
 __pycache__
 */__pycache__
 */*/__pycache__
 */*/*/__pycache__
-myvenv
-# /static
-.DS_Store
-web.config
-pro_settings.py

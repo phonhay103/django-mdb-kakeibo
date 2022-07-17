@@ -4,6 +4,7 @@ from django.db import models
 class PaymentCategory(models.Model):
     """支出カテゴリ"""
     name = models.CharField('カテゴリ名', max_length=32)
+    description = models.TextField('摘要', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -20,6 +21,7 @@ class Payment(models.Model):
 class IncomeCategory(models.Model):
     """収入カテゴリ"""
     name = models.CharField('カテゴリ名', max_length=32)
+    description = models.TextField('摘要', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -36,6 +38,7 @@ class Income(models.Model):
 class AssetCategory(models.Model):
     """資産カテゴリ"""
     name = models.CharField('カテゴリ名', max_length=32)
+    description = models.TextField('摘要', null=True, blank=True)
 
     def __str__(self):
         return self.name

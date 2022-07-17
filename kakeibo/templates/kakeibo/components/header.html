@@ -1,21 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" href="/">Private Kakeibo</a>
+    <a class="navbar-brand" href="/">Kakeibo</a> 
+    {% comment %} 家計簿ソフト {% endcomment %}
     <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'kakeibo:payment_list'%}">Payments</a>
+          <a class="nav-link" href="{% url 'kakeibo:payment_list'%}">
+            <i class="fas fa-money-check"></i>
+            Payments
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'kakeibo:income_list'%}">
+            <i class="fas fa-hand-holding-usd"></i>
             Incomes
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'kakeibo:asset_list'%}">
+            <i class="fas fa-coins"></i>
             Assets
           </a>
         </li>
@@ -35,11 +41,14 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'kakeibo:asset_dashboard' now_year now_month %}">
             <i class="fas fa-tachometer-alt"></i>
-            Asset Dash
+            Asset Dashboard
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/admin">Admin</a>
+          <a class="nav-link" href="{% url 'user:logout' %}">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </a>
         </li>
       </ul>
     </div>
