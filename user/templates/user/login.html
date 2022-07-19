@@ -1,20 +1,22 @@
-{% extends 'user/base.html' %} 
- 
+{% extends 'user/base.html' %}
+
 {% load i18n %}
 
-{% block content %}      
+{% block content %}
 
 {% load crispy_forms_tags %}
 
-<!--Login--> 
+<!--Login-->
 <div class="container py-5">
   <h1>Login</h1>
   <form method="POST">
     {% csrf_token %}
     {{ login_form|crispy }}
-    <button class="btn btn-primary" type="submit">{% translate "Login" %}</button>
+    <button class="btn btn-primary mt-3" type="submit">{% translate "Login" %}</button>
   </form>
-  <p class="text-center">{% translate "Don't have an account?" %} <a href={% url 'user:register' %}> {% translate "Create an account" %}</a></p>
+  <p class="text-center">{% translate "Don't have an account?" %} <a href={% url 'user:register' %}>
+      Create an account</a></p>
 </div>
+
 
 {% endblock %}

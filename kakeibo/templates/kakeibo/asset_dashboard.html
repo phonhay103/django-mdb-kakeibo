@@ -2,11 +2,13 @@
 {% block content %}
 
 <div class="text-center">
-  <a class="btn btn-sm btn-light btn-floating" href="{% url 'kakeibo:asset_dashboard' prev_month.year prev_month.month %}">
+  <a class="btn btn-sm btn-light btn-floating"
+    href="{% url 'kakeibo:asset_dashboard' prev_month.year prev_month.month %}">
     <i class="fas fa-chevron-left"></i>
   </a>
   <span class="ms-4 me-4 fs-5">{{ current_month|date:"Y-m" }}</span>
-  <a class="btn btn-sm btn-light btn-floating" href="{% url 'kakeibo:asset_dashboard' next_month.year next_month.month %}">
+  <a class="btn btn-sm btn-light btn-floating"
+    href="{% url 'kakeibo:asset_dashboard' next_month.year next_month.month %}">
     <i class="fas fa-chevron-right"></i>
   </a>
 </div>

@@ -3,10 +3,12 @@
 {% load humanize %}
 {% block content %}
 
-<button type="button" class="mb-2 btn btn-sm btn-rounded btn-success" data-mdb-toggle="modal" data-mdb-target="#itemCreateModal">
+<button type="button" class="mb-2 btn btn-sm btn-rounded btn-success" data-mdb-toggle="modal"
+  data-mdb-target="#itemCreateModal">
   <i class="fa fa-plus me-2"></i>
   <span class="ls-widest">New</span>
 </button>
+
 
 {% include "kakeibo/components/payment_search_form.html" %}
 

@@ -3,11 +3,13 @@
 {% block content %}
 
 <div class="text-center">
-  <a class="btn btn-sm btn-light btn-floating" href="{% url 'kakeibo:monthly_balance' prev_month.year prev_month.month %}">
+  <a class="btn btn-sm btn-light btn-floating"
+    href="{% url 'kakeibo:monthly_balance' prev_month.year prev_month.month %}">
     <i class="fas fa-chevron-left"></i>
   </a>
   <span class="ms-4 me-4 fs-5">{{ current_month|date:"Y-m" }}</span>
-  <a class="btn btn-sm btn-light btn-floating" href="{% url 'kakeibo:monthly_balance' next_month.year next_month.month %}">
+  <a class="btn btn-sm btn-light btn-floating"
+    href="{% url 'kakeibo:monthly_balance' next_month.year next_month.month %}">
     <i class="fas fa-chevron-right"></i>
   </a>
 </div>
@@ -21,11 +23,11 @@
       <div class="card-body">
         <h4 class="card-title text-center">
           {% if balance %}
-            {% if balance >= 0 %}
-            <span class="text-primary">+{{ balance|intcomma }}</span>
-            {% else %}
-            <span class="text-danger">{{ balance|intcomma }}</span>
-            {% endif %}
+          {% if balance >= 0 %}
+          <span class="text-primary">+{{ balance|intcomma }}</span>
+          {% else %}
+          <span class="text-danger">{{ balance|intcomma }}</span>
+          {% endif %}
           {% endif %}
         </h4>
       </div>
@@ -38,7 +40,7 @@
       </div>
       <div class="card-body">
         {% if total_payment %}
-          <h4 class="card-title text-center">{{ total_payment|intcomma }}</h4>
+        <h4 class="card-title text-center">{{ total_payment|intcomma }}</h4>
         {% endif %}
       </div>
     </div>
@@ -50,7 +52,7 @@
       </div>
       <div class="card-body">
         {% if total_income %}
-          <h4 class="card-title text-center">{{ total_income|intcomma }}</h4>
+        <h4 class="card-title text-center">{{ total_income|intcomma }}</h4>
         {% endif %}
       </div>
     </div>
