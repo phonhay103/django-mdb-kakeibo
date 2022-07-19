@@ -8,6 +8,5 @@ gunicorn
 django-heroku
 dj-database-url
 psycopg2-binary
-whitenoise
 # psycopg2
 django-crispy-forms
